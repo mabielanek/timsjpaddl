@@ -92,10 +92,12 @@ public class SchemaGenerator {
     private void generate(Dialect dialect, String directory) {
         cfg.setProperty("hibernate.dialect", dialect.getDialectClass());
         SchemaExport export = new SchemaExport(cfg);
-        export.setDelimiter(";");
-        export.setOutputFile(directory + "create_tables_" + dialect.name().toLowerCase() + ".sql");
         export.setFormat(true);
-        export.execute(true, false, false, false);
+        export.setDelimiter(";");
+        export.setOutputFile(directory + "create_db_" + dialect.name().toLowerCase() + ".sql");
+        export.create(true, false);
+        export.setOutputFile(directory + "drop_db_" + dialect.name().toLowerCase() + ".sql");
+        export.drop(true, false);
     }
 
     /**
